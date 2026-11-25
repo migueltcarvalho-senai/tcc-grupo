@@ -1,0 +1,342 @@
+================================================================================
+          HISTÓRICO E RESUMO DE DESENVOLVIMENTO - PROJETO TCC
+         SKETCHBOOK EDUCACIONAL INTERATIVO (ENSINO FUNDAMENTAL 1)
+================================================================================
+Data de Atualização: 22/10/2026
+Ambiente de Execução: Laragon (Apache, PHP 8.x, MySQL 8.x / porta 3308)
+Público-Alvo: Crianças de 6 a 9 anos (Ensino Fundamental 1)
+Foco Pedagógico Atual: Língua Inglesa (English for Kids)
+================================================================================
+
+1. IDENTIDADE VISUAL E DESIGN SYSTEM
+--------------------------------------------------------------------------------
+- Conceito Visual: Estilo "Caderno Escolar / Sketchbook" lúdico e vibrante.
+- Folha Central: Representação de página branca de caderno pautado (linhas
+  sutis horizontais), contorno espesso tipo cartum (borda escura) e detalhe de
+  espiral no topo.
+- Fundo da Aplicação:
+  * Cor de fundo ajustada para o tom papelão/kraft: #c6a175.
+  * Elementos oscilantes de fundo animados via CSS (@keyframes), flutuando
+    continuamente de um lado para o outro da tela para dar dinamismo sem
+    poluição visual.
+- Cores de Destaque:
+  * Verde vibrante (#00C853) / Verde escuro (#054D20)
+  * Laranja vibrante (#FF6D00) / Laranja escuro (#803700)
+  * Azul vibrante (#00B0FF) / Azul escuro (#004B87)
+  * Amarelo vibrante (#FFD600) / Amarelo escuro (#806B00)
+  * Papelão fundo (#c6a175) / Tinta escura (#0F172A)
+  * Sombras no estilo cartum rígido (drop shadows sem desfoque).
+
+--------------------------------------------------------------------------------
+2. TIPOGRAFIA PERSONALIZADA
+--------------------------------------------------------------------------------
+- Títulos Principais e Títulos de Destaque:
+  * Fonte: "Gooddog" (arquivo: fonts/good_dog/gooddog.TTF).
+  * Aplicada no título principal ("O QUE VAMOS APRENDER HOJE?"), títulos dos
+    cards de atividades e título principal do jogo ("COMPLETE THE SENTENCE!").
+  * Espaçamento ajustado (letter-spacing: 0.06em) para leitura agradável.
+- Textos Secundários, Badges, Botões e Interfaces Auxiliares:
+  * Fonte: "Bingo" (arquivo: fonts/bingo/BINGO.ttf).
+  * Incorporada via @font-face nos arquivos CSS e mapeada no Tailwind CSS.
+  * Aplicada em:
+    - Subtítulos explicativos;
+    - Perfil do aluno (Nível, Nome do Aprendiz);
+    - Botão de acessibilidade / ouvir tela;
+    - Badges dos cards (JOGO 01, JOGO 02, CRIATIVIDADE, PRÊMIOS);
+    - Textos informativos de cada card;
+    - Botões de ação ("JOGAR AGORA", "ABRIR QUADRO", "VER MEDALHAS", etc.);
+    - Placar de pontuação ("SCORE"), barra de progresso e feedbacks do jogo;
+    - Cards de opções de escolha do quiz;
+    - Rodapé informativo das páginas.
+
+--------------------------------------------------------------------------------
+3. ANIMAÇÕES E COMPORTAMENTO DOS CARDS (PÁGINA PRINCIPAL)
+--------------------------------------------------------------------------------
+- Layout com 3 Cards Centrais:
+  * O quarto card ("Minhas Medalhas") foi retirado da tela principal, deixando
+    uma grade limpa e harmoniosa de 3 cards:
+    1. Card 1 (JOGO 01): COMPLETE THE SENTENCE (English Quiz)
+    2. Card 2 (JOGO 02): POP THE BALLOONS (Sentence Builder)
+    3. Card 3 (RANKING): TOP SABIDOS (Mural de Conquistas e Melhores Pontuações)
+- Disposição em Zig-Zag:
+  * Cards organizados em grade responsiva (1 coluna no mobile, 3 colunas a
+    partir de md / max-w-5xl) alternando posições sutis de elevação.
+- Inclinação Lúdica:
+  * Cada card possui uma rotação inicial sutil (tortos/inclinados alternados:
+    -3deg, +3.2deg, -2deg).
+- Efeito Hover (Desentortar):
+  * Ao passar o cursor do mouse (hover), o card se desentorta suavemente para
+    rotação 0deg, elevando-se com física elástica e aumentando de escala (scale 1.04).
+
+--------------------------------------------------------------------------------
+4. PADRONIZAÇÃO LINUX (SNAKE_CASE) E ESTRUTURAÇÃO DE CÓDIGO
+--------------------------------------------------------------------------------
+- Compatibilidade Total com Máquinas e Servidores Linux:
+  * Todos os nomes de arquivos e diretórios que continham traços ('-'), espaços
+    ou extensões/nomes em maiúsculas foram renomeados estritamente para minúsculas
+    em formato snake_case ('_'), garantindo 100% de compatibilidade com sistemas
+    de arquivos case-sensitive (ext4/Linux):
+    - `jogo-baloes.php` → `jogo_baloes.php`
+    - `jogo-ingles.php` → `jogo_ingles.php`
+    - `temas-baloes.php` → `temas_baloes.php`
+    - `temas-ingles.php` → `temas_ingles.php`
+    - `css/index-php.css` → `css/index_php.css`
+    - `css/jogo-baloes.css` → `css/jogo_baloes.css`
+    - `css/jogo-ingles.css` → `css/jogo_ingles.css`
+    - `css/temas-ingles.css` → `css/temas_ingles.css`
+    - `fonts/cute_dolphin/Cute Dolphin.ttf` → `fonts/cute_dolphin/cute_dolphin.ttf`
+    - `fonts/good_dog/gooddog.TTF` → `fonts/good_dog/gooddog.ttf`
+    - `fonts/bingo/BINGO.ttf` → `fonts/bingo/bingo.ttf`
+    - `fundo-resposta-completar/` → `fundo_resposta_completar/`
+    - `post-it/` → `post_it/`
+    - `baloes/cores/balao-[cor].gif` → `baloes/cores/balao_[cor].gif`
+- Classes e Identificadores (IDs):
+  * Todos os IDs e classes CSS foram traduzidos e padronizados semanticamente
+    para o português (ex.: #livro-conteiner-principal, #cabecalho-principal,
+    .cartao-dinamico, .cartao-zigzag-cima, etc.).
+- Modularização do CSS:
+  * Folhas de estilo modularizadas na pasta /css:
+    - css/index.css (para index.html)
+    - css/index_php.css (para index.php)
+    - css/temas_ingles.css (para temas_ingles.php e temas_baloes.php)
+    - css/jogo_ingles.css (para jogo_ingles.php)
+    - css/jogo_baloes.css (para jogo_baloes.php)
+
+--------------------------------------------------------------------------------
+5. DESENVOLVIMENTO DO PRIMEIRO JOGO: QUIZ DE INGLÊS (GAP FILL)
+--------------------------------------------------------------------------------
+- Arquivo Principal: jogo-ingles.php
+- Estilo: css/jogo-ingles.css
+- Mecânica do Jogo:
+  * Formato "Complete the Sentence" (preencher lacuna).
+  * A frase é dividida em 3 partes:
+    1. Primeira parte da frase;
+    2. Lacuna central ("gap" sublinhado e destacado);
+    3. Segunda parte da frase.
+  * Abaixo da pergunta, são exibidos cards interativos com opções de palavras,
+    misturando a resposta correta com opções erradas (distratores).
+  * Verificação Interativa:
+    - Ao clicar em uma opção incorreta: a lacuna e o card ficam vermelhos,
+      tremem com animação de erro e emitem aviso ("Try again!"), permitindo
+      nova tentativa.
+    - Ao clicar na opção correta: o card fica verde, a lacuna é preenchida
+      com a resposta em verde, feedback positivo é exibido ("Correct! Well
+      done!"), a pontuação sobe e o jogo avança automaticamente após 1.4s.
+  * Barra de Progresso dinâmica exibindo porcentagem e número da questão.
+  * Tela de Conclusão / Overlay Final:
+    - Exibe mensagem com base no aproveitamento (troféu/emoji, parabéns);
+    - Placar final com total de acertos;
+    - Botões para reiniciar o jogo ("Play Again") ou voltar à página inicial.
+- Randomização Dupla:
+  * Ordem das perguntas: embaralhada no servidor via shuffle() em PHP a cada
+    vez que a página é carregada ou reiniciada.
+  * Ordem dos cards de resposta: embaralhada no cliente via algoritmo
+    Fisher-Yates no JavaScript a cada pergunta.
+
+--------------------------------------------------------------------------------
+6. PÁGINAS DE SELEÇÃO DE TEMAS (POST-ITS ESTILIZADOS)
+--------------------------------------------------------------------------------
+- Arquivos:
+  * temas-ingles.php (Seleção de temas do Jogo 1 — Complete the Sentence)
+  * temas-baloes.php (Seleção de temas do Jogo 2 — Estoure os Balões)
+- Folha de Estilo Compartilhada: css/temas-ingles.css
+- Características Visuais e Interativas:
+  * Layout em formato de folha de caderno com espirais no topo e fundo papelão.
+  * Cards em formato de post-it estilizados utilizando os assets da pasta
+    `post-it/` (designs 1.png a 6.png).
+  * Algoritmo de alternância cíclica garantindo que dois post-its de mesmo
+    design nunca fiquem lado a lado na grade.
+  * Inclinações lúdicas alternadas (postit-inclinado-1 a 6) com desentortamento
+    suave no hover (transition cubic-bezier).
+  * Tamanho ampliado dos post-its (max-width: 360px) com espaçamento generoso.
+  * Todas as fontes padronizadas na cor preta (#0F172A) para contraste e
+    acessibilidade ideal para crianças em fase de alfabetização.
+  * Remoção completa de emojis de alfinete (📌) para visual limpo e moderno.
+  * Títulos dos temas estilizados com a fonte personalizada "Cute Dolphin".
+  * Submissão via formulário HTML com botões do tipo submit enviando o parâmetro
+    `GET tema` (contendo o ID do tema) para a respectiva página do jogo.
+
+--------------------------------------------------------------------------------
+7. DESENVOLVIMENTO DO SEGUNDO JOGO: ESTOURE OS BALÕES (SENTENCE BUILDER)
+--------------------------------------------------------------------------------
+- Arquivo Principal: jogo-baloes.php
+- Folha de Estilo: css/jogo-baloes.css
+- Objetivo Pedagógico:
+  * Desenvolvimento da lógica linguística, ordem sintática (Subject + Verb + Object)
+    e associação semântica em língua inglesa para crianças de 6 a 9 anos.
+- Cenário Visual e Identidade:
+  * Fundo em degradê azul céu (#87CEEB -> #E3F4FC) com nuvens brancas
+    flutuantes animadas em segundo plano via CSS @keyframes.
+  * Caderno escolar com espirais no topo, molduras em tinta escura e sombras cartum.
+  * Quadro azul ampliado (.area-baloes) com 540px de altura e container max-w-5xl,
+    fornecendo um campo visual panorâmico e arejado para as crianças.
+- Motor de Animação dos Balões (Sprite Frame Cycling):
+  * Utiliza frames individuais em formato GIF da pasta `baloes/verde/`:
+    - Inteiro / Flutuação: 37 frames (frame_00_delay-0.06s.gif a frame_36 + frame_46).
+      O JavaScript cicla as imagens a cada 75ms gerando oscilação contínua e realista.
+    - Explosão (Pop): 9 frames (frame_37_delay-0.06s.gif a frame_45).
+      Ao ser clicado, o balão troca imediatamente para a sequência de explosão e
+      desaparece suavemente após 540ms.
+  * Balões ampliados para 165px x 198px (desktop) e textos com fonte Bingo de até
+    1.65rem em alto contraste com contorno preto 360° em volta das letras.
+  * Escala inteligente de fonte: palavras com mais letras (como "sleeping", "morning",
+    "carrots") têm sua fonte ajustada automaticamente para caber 100% no balão
+    sem cortes nem truncamentos.
+- Algoritmo de Posicionamento com Margem de Segurança Estrita (Zero Overlap):
+  * Elimina qualquer risco de sobreposição entre balões:
+    - Margem mínima de segurança de 32px das bordas do quadro e 40px+ entre balões.
+    - Distribuição geométrica calibrada conforme a quantidade de palavras:
+      * 1 a 3 balões: Linha horizontal única centralizada com >100px de vão livre.
+      * 4 balões: Grade 2x2 com ampla separação horizontal (>150px) e vertical (>64px).
+      * 5 balões (Padrão Quinconce): 3 balões no topo e 2 balões embaixo posicionados
+        exatamente nos vãos entre os de cima, impedindo colisões em ambos os eixos.
+      * 6 balões: 2 linhas bem espaçadas (topo e base) com colunas intercaladas.
+  * Amplitudes de flutuação vertical ajustadas para máximo de 6px a 7px, garantindo
+    que os balões flutuem com dinamismo sem invadir a margem do vizinho.
+- Mecânica e Lógica do Jogo:
+  1. O PHP busca as frases do tema escolhido (`WHERE f.id_tema = ?`).
+  2. A frase é decomposta em palavras individuais através do método nativo
+     `explode(' ', $frase)` e a frase completa é guardada na variável de controle.
+  3. No cliente (JS), as palavras são embaralhadas e associadas aos balões.
+  4. Ao clicar em cada balão:
+     - O balão explode com a animação de 9 frames;
+     - A palavra é enviada para a área "Sentence Builder" preenchendo os slots na ordem;
+  5. Ao selecionar todas as palavras da frase:
+     - O sistema compara a frase montada com a variável da frase de controle.
+     - SE CORRETA: feedback sonoro/visual verde ("EXCELLENT!"), slots iluminados e
+       avanço automático para a próxima frase do tema.
+     - SE INCORRETA: feedback vermelho de erro com tremor ("OOPS! TRY AGAIN!"),
+       limpeza dos slots e reorganização automática com novo sorteio dos balões na tela
+       para a criança tentar novamente até acertar.
+  6. Recursos Adicionais:
+     - Botão "RESET WORDS" para reiniciar as palavras da frase atual quando desejado;
+     - Barra de progresso dinâmica e placar de pontuação em tempo real;
+     - Overlay de vitória final com opções de jogar novamente, escolher outro tema ou ir ao menu.
+  7. Respeito ao Banco de Dados (Clean Code):
+     - Todos os inserts em tempo de execução foram removidos do código PHP; o jogo
+       depende exclusivamente das tabelas provisionadas no banco MySQL via migração.
+
+--------------------------------------------------------------------------------
+8. BANCO DE DADOS E ARQUITETURA DE DADOS (MYSQL)
+--------------------------------------------------------------------------------
+- Banco de Dados: `tccdb`
+- Conexão: config/config.php (host localhost:3308, usuário root)
+- Script de Migração Oficial: banco/jogo_ingles_migration.sql
+- Padronização de Colunas:
+  * Todas as referências à chave estrangeira de temas foram uniformizadas para a
+    coluna oficial `id_tema` em todas as tabelas, queries SQL e parâmetros PHP.
+- Estrutura Relacional Atualizada (5 Tabelas):
+  1. Tabela `Jogo`:
+     - id (INT, PK, AUTO_INCREMENT)
+     - nome (VARCHAR) — ex.: 'complete sentence', 'ballons'
+     - descricao (VARCHAR)
+
+  2. Tabela `Tema`:
+     - id (INT, PK, AUTO_INCREMENT)
+     - id_jogo (INT, FK referenciando Jogo.id)
+     - nome (VARCHAR) — ex.: 'animals', 'colors', 'daily life', 'nature', 'food'
+
+  3. Tabela `Pergunta` (Jogo 1: Complete the Sentence):
+     - id (INT, PK, AUTO_INCREMENT)
+     - primeira parte (VARCHAR)
+     - resposta (VARCHAR)
+     - segunda parte (VARCHAR)
+     - id_tema (INT, FK referenciando Tema.id)
+
+  4. Tabela `Conjunto de respostas erradas` (Jogo 1):
+     - id (INT, PK, AUTO_INCREMENT)
+     - nome do conjunto (VARCHAR)
+     - conjunto (JSON contendo o array de distratores/respostas erradas)
+     - Pergunta_id (INT, FK referenciando Pergunta.id)
+
+  5. Tabela `Frases` (Jogo 2: Estoure os Balões):
+     - id (INT, PK, AUTO_INCREMENT)
+     - frase (VARCHAR(500) - Frase completa em inglês para construção)
+     - id_tema (INT, FK referenciando Tema.id)
+
+- Jogos e Temas Cadastrados:
+  * Jogo 1: 'complete sentence' (id=1)
+    - Temas: animals (1), colors (2), food (3), school (4), family (5), sports (6)
+  * Jogo 2: 'ballons' (id=2)
+    - Temas: daily life (7), nature (8), animals (9), food (10)
+    - Frases: 20 frases de exemplo (3 a 5 palavras cada) distribuídas entre os temas 7 a 10.
+
+- Segurança e Integração PHP/MySQL:
+  * Consultas preparadas (Prepared Statements) parametrizadas por tema (`p.id_tema = ?` e `f.id_tema = ?`)
+    e jogo (`t.id_jogo = ?`), garantindo imunidade a ataques de SQL Injection.
+  * Suporte a separação de quizzes e frases por tema via query string (`?tema=1`, `?tema=7`, etc.).
+
+--------------------------------------------------------------------------------
+9. MAPA ATUAL DE ARQUIVOS DO PROJETO (ESTRUTURA LINUX COMPATÍVEL)
+--------------------------------------------------------------------------------
+c:\laragon\www\Tcc-Projeto\
+│
+├── index.html                   # Página inicial estática (HTML/Tailwind - 3 Cards)
+├── index.php                    # Página inicial dinâmica (PHP/Tailwind - 3 Cards)
+├── temas_ingles.php             # Seleção de Temas — Jogo 1 (Post-its lúdicos)
+├── jogo_ingles.php              # Jogo 1: Complete the Sentence (Gap Fill Quiz)
+├── temas_baloes.php             # Seleção de Temas — Jogo 2 (Post-its lúdicos)
+├── jogo_baloes.php              # Jogo 2: Estoure os Balões (Pop the Balloons)
+├── RESUMO_PROJETO.txt           # Este documento oficial de histórico e status
+├── DESIGN.md                    # Especificação do Design System
+│
+├── css/
+│   ├── index.css                # Estilos da página index.html
+│   ├── index_php.css            # Estilos da página index.php
+│   ├── temas_ingles.css         # Estilos da seleção de temas (post-its e cards)
+│   ├── jogo_ingles.css          # Estilos do jogo de preencher lacunas
+│   └── jogo_baloes.css          # Estilos do jogo dos balões (céu azul, slots, animações)
+│
+├── baloes/
+│   ├── pop.gif                  # Animação oficial de explosão dos balões
+│   ├── cores/                   # Gifs com balões coloridos em rotação/flutuação
+│   │   ├── balao_amarelo.gif
+│   │   ├── balao_laranja.gif
+│   │   ├── balao_rosa.gif
+│   │   ├── balao_verde.gif
+│   │   └── balao_vermelho.gif
+│   └── exploding/
+│       └── pop.gif
+│
+├── fonts/
+│   ├── good_dog/gooddog.ttf     # Fonte para títulos principais (Gooddog)
+│   ├── bingo/bingo.ttf          # Fonte para textos, badges e botões (Bingo)
+│   ├── cute_dolphin/cute_dolphin.ttf # Fonte Cute Dolphin (títulos dos post-its)
+│   └── child_dream_2/dream.ttf  # Fonte alternativa Dream
+│
+├── post_it/                     # Imagens PNG de post-its estilizados (1.png a 6.png)
+├── fundo_resposta_completar/    # Fitas de papel colorido para o Gap (1.png a 7.png)
+│
+├── banco/
+│   ├── jogo_ingles_migration.sql # Script SQL oficial de migração
+│   └── tccdb_hosting.sql         # Script SQL pronto para hosting externo / remoto
+│
+└── config/
+    ├── config.php               # Conexão centralizada com o banco tccdb (com suporte a env vars e db_table)
+    └── proteger.php             # Script auxiliar de proteção/sessão
+
+--------------------------------------------------------------------------------
+10. COMPATIBILIDADE E REFATORAÇÃO PARA HOSPEDAGENS LINUX
+--------------------------------------------------------------------------------
+- Resolução Dinâmica de Tabelas (db_table):
+  * Em servidores Linux (ext4), o MySQL opera por padrão em lower_case_table_names=0
+    (estritamente case-sensitive).
+  * A função db_table($conn, $tabela) mapeia dinamicamente as tabelas existentes
+    via SHOW TABLES, resolvendo discrepâncias entre 'Tema' e 'tema', 'Pergunta'
+    e 'pergunta', 'Frases' e 'frases', 'Jogo' e 'jogo', 'usuarios' e 'usuario'.
+- Configuração de Charset Obrigatória (utf8mb4):
+  * Ativação de $conn->set_charset('utf8mb4') para garantir integridade de acentos
+    e evitar falhas de serialização no json_encode em distribuições Linux.
+- Tratamento de Falhas e Desativação de Exceptions Automáticas (PHP 8.1+):
+  * Definição de mysqli_report(MYSQLI_REPORT_OFF) com verificações estritas de
+    $stmt e prepared statements, prevenindo erros 500 caso tabelas/linhas estejam
+    vazias.
+- Resolução de Caminhos Globais:
+  * Substituição de caminhos relativos em glob() por __DIR__ absoluto, garantindo
+    que os assets (como baloes/cores/*.gif) sejam carregados com precisão
+    independentemente do document_root do servidor web Linux.
+================================================================================
+FIM DO RELATÓRIO
+================================================================================
+
+
