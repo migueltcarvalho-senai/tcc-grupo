@@ -223,13 +223,27 @@ if ($acao === 'host_status') {
     if ($pergunta_atual) {
         $pid = (int) $pergunta_atual['id'];
 
-        // Busca alternativas da pergunta
-        $stmtR = $conn->prepare("SELECT id, texto, correta FROM {$tbl_resposta} WHERE pergunta_id = ? ORDER BY id ASC");
+        // Busca alternativas da pergunta e embaralha de forma determinística para esta sala e pergunta
+        $stmtR = $conn->prepare("SELECT id, texto, correta FROM {$tbl_resposta} WHERE pergunta_id = ?");
         $stmtR->bind_param('i', $pid);
         $stmtR->execute();
         $resR = $stmtR->get_result();
-        $idxOp = 0;
+        $respostas_raw = [];
         while ($r = $resR->fetch_assoc()) {
+            $respostas_raw[] = $r;
+        }
+        $stmtR->close();
+
+        // Embaralhamento determinístico garantindo que Host e todos os Alunos vejam a mesma ordem
+        usort($respostas_raw, function ($a, $b) use ($sala_id, $pid) {
+            return strcmp(
+                md5($sala_id . '_' . $pid . '_' . $a['id']),
+                md5($sala_id . '_' . $pid . '_' . $b['id'])
+            );
+        });
+
+        $idxOp = 0;
+        foreach ($respostas_raw as $r) {
             $simb = $SIMBOLOS_KAHOOT[$idxOp % count($SIMBOLOS_KAHOOT)];
             $respostas_opcoes[] = [
                 'id'       => (int) $r['id'],
@@ -243,7 +257,6 @@ if ($acao === 'host_status') {
             ];
             $idxOp++;
         }
-        $stmtR->close();
 
         // Contabiliza respostas dos jogadores nesta pergunta
         $stmtV = $conn->prepare("SELECT resposta_id, COUNT(*) as qtd FROM {$tbl_resposta_j} WHERE sala_id = ? AND pergunta_id = ? GROUP BY resposta_id");
@@ -458,15 +471,29 @@ if ($acao === 'player_status') {
         }
     }
 
-    // Carrega botões das opções no formato Kahoot (sem o texto do enunciado!)
+    // Carrega botões das opções no formato Kahoot (sem o texto do enunciado!) embaralhados na mesma ordem do host
     $opcoes_botoes = [];
     if ($pergunta_id > 0) {
-        $stmtOps = $conn->prepare("SELECT id FROM {$tbl_resposta} WHERE pergunta_id = ? ORDER BY id ASC");
+        $stmtOps = $conn->prepare("SELECT id FROM {$tbl_resposta} WHERE pergunta_id = ?");
         $stmtOps->bind_param('i', $pergunta_id);
         $stmtOps->execute();
         $resOps = $stmtOps->get_result();
-        $opIdx = 0;
+        $ops_raw = [];
         while ($opRow = $resOps->fetch_assoc()) {
+            $ops_raw[] = $opRow;
+        }
+        $stmtOps->close();
+
+        // Mesma ordenação determinística utilizada no host_status
+        usort($ops_raw, function ($a, $b) use ($sala_id, $pergunta_id) {
+            return strcmp(
+                md5($sala_id . '_' . $pergunta_id . '_' . $a['id']),
+                md5($sala_id . '_' . $pergunta_id . '_' . $b['id'])
+            );
+        });
+
+        $opIdx = 0;
+        foreach ($ops_raw as $opRow) {
             $simb = $SIMBOLOS_KAHOOT[$opIdx % count($SIMBOLOS_KAHOOT)];
             $opcoes_botoes[] = [
                 'id'      => (int) $opRow['id'],
@@ -477,7 +504,6 @@ if ($acao === 'player_status') {
             ];
             $opIdx++;
         }
-        $stmtOps->close();
     }
 
     json_resposta([

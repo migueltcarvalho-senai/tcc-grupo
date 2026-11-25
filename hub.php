@@ -235,18 +235,15 @@ if ($userId > 0) {
                 </a>
 
                 <!-- =====================================================
-                     CARD 2 — MATEMÁTICA (EM BREVE)
+                     CARD 2 — MATEMÁTICA (ATIVO)
                      ===================================================== -->
-                <div id="card-matematica"
-                     class="cartao-bloqueado bg-roxo-vibrante text-white cartao-arredondado p-6 shadow-sombra-cartum-roxo flex flex-col justify-between min-h-[300px] relative overflow-hidden"
-                     style="border: 4px solid #3B0764;"
-                     title="Em breve! Esta área ainda está sendo preparada.">
-
-                    <!-- Ícone Cadeado (fundo) -->
-                    <span class="icone-cadeado" aria-hidden="true">🔒</span>
+                <a id="card-matematica"
+                   href="hub_matematica.php"
+                   class="cartao-dinamico cartao-zigzag-baixo cartao-inclinado-direita bg-roxo-vibrante text-white cartao-arredondado p-6 shadow-sombra-cartum-roxo flex flex-col justify-between min-h-[300px] cursor-pointer group no-underline relative"
+                   style="border: 4px solid #3B0764;">
 
                     <!-- TOPO DO CARD: BADGE + ÍCONE -->
-                    <div class="flex items-start justify-between relative z-10">
+                    <div class="flex items-start justify-between">
                         <span class="bg-papel-branco text-roxo-escuro font-bingo text-xs font-extrabold px-3 py-1 border-2 border-roxo-escuro rounded-xl">
                             DISCIPLINA 02
                         </span>
@@ -256,20 +253,23 @@ if ($userId > 0) {
                     </div>
 
                     <!-- TÍTULO E DESCRIÇÃO -->
-                    <div class="my-4 flex-1 flex flex-col justify-center relative z-10">
+                    <div class="my-4 flex-1 flex flex-col justify-center">
                         <h2 class="font-gooddog text-4xl sm:text-5xl font-bold leading-tight uppercase text-white tracking-wider">
                             MATEMÁTICA
                         </h2>
                         <p class="font-bingo text-xs sm:text-sm font-extrabold text-purple-200 mt-2 tracking-wide leading-snug">
-                            Jogos de números, operações e lógica. Em breve!
+                            Jogos de números, contas e frações divertidas!
                         </p>
                     </div>
 
-                    <!-- BADGE EM BREVE -->
-                    <div class="w-full bg-papel-branco text-roxo-escuro font-bingo font-extrabold text-sm py-2.5 px-3 border-2 border-roxo-escuro rounded-2xl text-center flex items-center justify-center gap-2 relative z-10">
-                        <span class="badge-em-breve">🔒 EM BREVE</span>
+                    <!-- BOTÃO -->
+                    <div class="w-full bg-papel-branco text-roxo-escuro font-bingo font-extrabold text-sm py-2.5 px-3 border-2 border-roxo-escuro rounded-2xl text-center flex items-center justify-center gap-2 group-hover:bg-amarelo-vibrante group-hover:text-tinta-escura transition-colors">
+                        <span>ENTRAR</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3.5" viewBox="0 0 24 24">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
                     </div>
-                </div>
+                </a>
 
                 <!-- =====================================================
                      CARD 3 — GEMGAME (ATIVO)

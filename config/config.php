@@ -8,9 +8,9 @@ mysqli_report(MYSQLI_REPORT_OFF);
 
 $db   = getenv('DB_NAME') ?: "tccdb";
 $host = getenv('DB_HOST') ?: "localhost";
-$port = (int) (getenv('DB_PORT') ?: 3306);
+$port = (int) (getenv('DB_PORT') ?: 3308);
 $user = getenv('DB_USER') ?: "root";
-$pass = getenv('DB_PASS') !== false ? getenv('DB_PASS') : (getenv('DB_PASSWORD') !== false ? getenv('DB_PASSWORD') : "mysql");
+$pass = getenv('DB_PASS') !== false ? getenv('DB_PASS') : (getenv('DB_PASSWORD') !== false ? getenv('DB_PASSWORD') : "");
 
 $conn = @new mysqli($host, $user, $pass, $db, $port);
 

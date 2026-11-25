@@ -78,7 +78,25 @@ O projeto foi concebido como um Trabalho de Conclusão de Curso (TCC) com foco n
 ### 5. Jogo 04: Ouça e Escolha (`jogo_ouvir.php` & `temas_ouvir.php`)
 * **Mecânica**: Compreensão auditiva (*Listening*). O aluno ouve a pronúncia correta em inglês e clica na imagem/palavra correspondente.
 
-### 6. Mural de Conquistas & Gamificação (`ranking.php` & `salvar_pontuacao.php`)
+### 6. Módulo de Matemática (`hub_matematica.php`)
+* **Hub Central de Matemática**: Interface estilo caderno cartum com acesso direto aos jogos matemáticos.
+* **Jogo 01: Calculando (`jogo_calculando.php`)**:
+  * Operações aritméticas (+, −, ×, ÷) com progressão em 3 níveis (Básico com 7 acertos para avançar, Médio com 7 acertos para avançar e Difícil infinito).
+  * Cronômetro de 30s com 3 estrelas que somem progressivamente a cada 10s.
+  * Suporte a teclado virtual (3x4) e teclado físico do computador.
+  * Tela de "Fim de Jogo" ao zerar o tempo ou errar.
+* **Jogo 02: Fracionando (`jogo_fracionando.php`)**:
+  * Gráfico de pizza SVG dinâmico representando frações visuais com preenchimento customizado e contorno cartoon.
+  * Grid com 4 opções de resposta fracionária geradas dinamicamente com distratores matemáticos plausíveis.
+  * Cronômetro de 30s com 3 estrelas dinâmicas (`icones/estrela.svg`) e reinício de rodada.
+* **Jogo 03: Jogo do Troco (`jogo_troco.php`)**:
+  * Baseado na referência visual MathPlay (`exemplos-layout/MathPlay.png`).
+  * Cálculo prático de troco financeiro para situações reais do cotidiano.
+  * Painel com valor pago, valor total da compra e 3 campos de conferência: Reais, Centavos e Total acumulado em tempo real.
+  * Botões de ação rápida: Confirmar (`#c1cf35`) e Apagar última ação (`#f22373`).
+  * Barra de tempo com contagem regressiva de 30s e 3 estrelas dinâmicas (`icones/estrela.svg`).
+
+### 7. Mural de Conquistas & Gamificação (`ranking.php` & `salvar_pontuacao.php`)
 * **`ranking.php`**: Quadro interativo "Top Sabidos", listando os melhores alunos ranqueados por acertos, pontuação e precisão (com cálculo de questões respondidas versus acertos).
 * **`salvar_pontuacao.php`**: Endpoint assíncrono (JSON) que consolida em tempo real as vitórias e acertos do aluno no banco de dados.
 
@@ -157,12 +175,11 @@ O sistema foi especialmente refatorado para garantir execução sem falhas tanto
    * No XAMPP: `C:\xampp\htdocs\Tcc-Projeto`
 2. Inicie os serviços do **Apache** e **MySQL**.
 3. Acesse o **phpMyAdmin** (`http://localhost/phpmyadmin`):
-   * Crie o banco de dados `tccdb`.
-   * Importe o script [banco/tccdb_hosting.sql](file:///c:/Users/sesi2b/laragon/www/Tcc-Projeto/banco/tccdb_hosting.sql).
-   * Importe a carga de perguntas e frases [banco/inserts.sql](file:///c:/Users/sesi2b/laragon/www/Tcc-Projeto/banco/inserts.sql).
+   * Crie o banco de dados `tccdb` (ou execute o script direto).
+   * Importe o script unificado [banco/banco_completo.sql](file:///c:/Users/sesi2b/laragon/www/tcc-grupo/banco/banco_completo.sql), que recria todas as 14 tabelas e insere todos os dados e jogos automaticamente em uma única etapa.
 4. Abra o navegador e acesse:
    ```text
-   http://localhost/Tcc-Projeto/login.php
+   http://localhost/tcc-grupo/login.php
    ```
 
 ---
@@ -171,7 +188,7 @@ O sistema foi especialmente refatorado para garantir execução sem falhas tanto
 
 1. Faça o upload de todos os arquivos do projeto para o diretório `public_html` da sua hospedagem.
 2. No painel da hospedagem (cPanel / Hostinger / etc.), crie um banco MySQL e um usuário com permissões completas.
-3. Importe o arquivo [banco/tccdb_hosting.sql](file:///c:/Users/sesi2b/laragon/www/Tcc-Projeto/banco/tccdb_hosting.sql) no phpMyAdmin da hospedagem.
+3. Importe o arquivo unificado [banco/banco_completo.sql](file:///c:/Users/sesi2b/laragon/www/tcc-grupo/banco/banco_completo.sql) no phpMyAdmin da hospedagem.
 4. Ajuste as credenciais do banco em `config/config.php` (ou configure variáveis de ambiente no painel):
    * `DB_HOST`: normalmente `localhost`
    * `DB_USER`: usuário do banco criado no painel

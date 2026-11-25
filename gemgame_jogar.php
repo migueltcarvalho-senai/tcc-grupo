@@ -560,9 +560,15 @@ $total     = count($perguntas_jogo);
             // Progresso
             atualizarProgresso(indicePerguntaAtual);
 
-            // Respostas
+            // Respostas (embaralhamento completo Fisher-Yates em tempo de execução)
+            const respostasEmbaralhadas = [...perg.respostas];
+            for (let i = respostasEmbaralhadas.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [respostasEmbaralhadas[i], respostasEmbaralhadas[j]] = [respostasEmbaralhadas[j], respostasEmbaralhadas[i]];
+            }
+
             elGradeRespostas.innerHTML = '';
-            perg.respostas.forEach((resp, i) => {
+            respostasEmbaralhadas.forEach((resp, i) => {
                 const btn = document.createElement('button');
                 btn.type      = 'button';
                 btn.className = 'cartao-resposta';
